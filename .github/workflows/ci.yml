@@ -10,18 +10,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@v6
 
-      - uses: cachix/install-nix-action@6ed6027e4e9f222b485de42b929ec2fcaa1a16c7 # v30
+      - name: Setup nix
+        uses: ./.github/actions/setup-nix
         with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Build all themes
         run: nix build .#all
 
       - name: Upload dist artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: result/
@@ -29,12 +29,12 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@v6
 
-      - uses: cachix/install-nix-action@6ed6027e4e9f222b485de42b929ec2fcaa1a16c7 # v30
+      - name: Setup nix
+        uses: ./.github/actions/setup-nix
         with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Lint CSS
         run: |

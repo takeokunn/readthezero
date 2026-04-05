@@ -36,7 +36,7 @@
               inherit version;
               src = ./src;
 
-              nativeBuildInputs = [ pkgs.lightningcss ];
+              nativeBuildInputs = [ pkgs.lightningcss pkgs.esbuild ];
 
               buildPhase = ''
                 runHook preBuild
@@ -53,8 +53,8 @@
                   --targets '>= 0.25%' \
                   themes/${name}.css -o out/readthezero-theme-${name}.css
 
-                # Copy JS
-                cp js/readthezero.js out/readthezero.js
+                # Minify JS
+                esbuild --minify --target=chrome92,firefox90,safari15.4 js/readthezero.js --outfile=out/readthezero.js
 
                 # Generate setup file from template
                 cp setup/readthezero.setup.template out/readthezero-${name}.setup
@@ -233,6 +233,7 @@
           default = pkgs.mkShell {
             packages = [
               pkgs.lightningcss
+              pkgs.esbuild
               emacs
             ];
             shellHook = ''
