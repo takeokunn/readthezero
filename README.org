@@ -1,14 +1,13 @@
 #+TITLE: readthezero
 #+OPTIONS: toc:t num:nil ^:nil
 
-# Badge placeholders
-# [[https://github.com/takeokunn/readthezero/actions][https://img.shields.io/github/actions/workflow/status/takeokunn/readthezero/ci.yml?branch=main]]
-# [[LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
-
-* About
+[[https://github.com/takeokunn/readthezero/actions][https://img.shields.io/github/actions/workflow/status/takeokunn/readthezero/ci.yml?branch=main]]
+[[file:LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
 
 *readthezero* is a modern, accessible HTML export theme for [[https://orgmode.org/][Org-mode]].
 It is the successor to [[https://github.com/fniessen/org-html-themes][readtheorg]], rebuilt from scratch with contemporary CSS.
+
+[[https://takeokunn.github.io/readthezero][Live Demo]]
 
 * Features
 
@@ -110,7 +109,26 @@ Build a specific theme:
 nix build .#ocean
 #+END_SRC
 
-The dev shell provides =lightningcss= and =stylelint=.
+Build the example documentation:
+
+#+BEGIN_SRC shell
+nix build .#example
+#+END_SRC
+
+Preview the site locally:
+
+#+BEGIN_SRC shell
+nix run .#serve              # serves at http://localhost:8080
+nix run .#serve -- 3000      # use a custom port
+#+END_SRC
+
+Run all checks (build + lint + examples):
+
+#+BEGIN_SRC shell
+nix flake check
+#+END_SRC
+
+The dev shell provides =lightningcss= and =esbuild=.
 
 * Browser Support
 
@@ -129,8 +147,6 @@ readthezero targets *WCAG 2.2 AA* compliance:
 * License
 
 MIT. See [[file:LICENSE][LICENSE]].
-
-* Credits
 
 Inspired by [[https://github.com/fniessen/org-html-themes][readtheorg]] by Fabrice Niessen.
 Built with [[https://lightningcss.dev/][lightningcss]].
