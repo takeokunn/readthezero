@@ -1,0 +1,15 @@
+/*
+ * readthezero - Default Variables
+ * Layout and typography defaults. Themes only override color variables.
+ */
+
+:root {
+  --rtz-sidebar-width: 260px;
+  --rtz-toc-width: 220px;
+  --rtz-content-max-width: 52rem;
+  --rtz-font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --rtz-font-heading: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --rtz-font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --rtz-font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --rtz-line-height: 1.6;
+}

@@ -1,0 +1,8 @@
+dist/
+result
+result-*
+.direnv/
+node_modules/
+.serena/
+.envrc
+.playwright-mcp/

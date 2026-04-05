@@ -1,0 +1,286 @@
+#+TITLE: readthezero - Example Document
+#+AUTHOR: readthezero contributors
+#+DESCRIPTION: Comprehensive example showcasing all readthezero theme features
+# #+SETUPFILE: https://takeokunn.github.io/readthezero/readthezero-default.setup
+#+OPTIONS: toc:t num:t ^:nil
+
+* Introduction
+
+This document demonstrates every visual element supported by the *readthezero* theme.
+It serves as both user-facing documentation and a visual regression test for theme development.
+
+readthezero is a modern, accessible Org-mode HTML export theme---the successor to readtheorg.
+It provides a responsive 3-column layout, automatic dark mode, and WCAG 2.2 AA compliance.
+
+To use this theme with your own Org files, uncomment the =#+SETUPFILE= line above
+and replace the URL with the path to your readthezero setup file.
+
+* Typography
+
+** Heading Level 2
+
+This is a paragraph of body text. It uses the theme's base font stack defined by =--rtz-font-body=.
+The line height and font size are tuned for comfortable reading on screens of all sizes.
+
+*** Heading Level 3
+
+Inline formatting: *bold text*, /italic text/, +strikethrough text+, =inline code=, ~verbatim~.
+
+**** Heading Level 4
+
+Here is a [[https://github.com/takeokunn/readthezero][hyperlink to the readthezero repository]].
+Links use the =--rtz-link= and =--rtz-link-hover= custom properties for color.
+
+***** Heading Level 5
+
+Deeply nested headings are less common but should still render cleanly with proper spacing.
+
+****** Heading Level 6
+
+This is the deepest heading level. It should remain visually distinct from body text.
+
+** Paragraphs
+
+A short paragraph sits here. Below is a longer one to demonstrate text flow.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+* Code Blocks
+
+Code blocks use the =--rtz-code-bg=, =--rtz-code-text=, and =--rtz-code-border= variables.
+
+** Emacs Lisp
+
+#+BEGIN_SRC emacs-lisp
+(defun rtz-greet (name)
+  "Return a greeting string for NAME."
+  (format "Hello, %s! Welcome to readthezero." name))
+
+(message (rtz-greet "World"))
+#+END_SRC
+
+** Python
+
+#+BEGIN_SRC python
+def fibonacci(n: int) -> list[int]:
+    """Return the first n Fibonacci numbers."""
+    if n <= 0:
+        return []
+    sequence = [0, 1]
+    while len(sequence) < n:
+        sequence.append(sequence[-2] + sequence[-1])
+    return sequence[:n]
+
+
+if __name__ == "__main__":
+    print(fibonacci(10))
+#+END_SRC
+
+** JavaScript
+
+#+BEGIN_SRC javascript
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Fetch failed:", error.message);
+    return null;
+  }
+}
+
+fetchData("https://api.example.com/data").then(console.log);
+#+END_SRC
+
+** CSS
+
+#+BEGIN_SRC css
+:root {
+  --rtz-primary: oklch(0.55 0.2 250);
+  --rtz-bg: light-dark(#ffffff, #0f0f0f);
+  --rtz-text: light-dark(#1a1a1a, #e5e5e5);
+  --rtz-font-body: system-ui, -apple-system, sans-serif;
+}
+
+.custom-card {
+  background: var(--rtz-bg-secondary);
+  border: 1px solid var(--rtz-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+#+END_SRC
+
+* Admonitions
+
+Admonitions draw attention to important information. Each type has distinct colors
+defined by theme variables such as =--rtz-note-bg= and =--rtz-warning-border=.
+
+#+BEGIN_NOTE
+This is a *note* admonition. Use it for supplementary information that adds context
+but is not essential to understanding the main content.
+#+END_NOTE
+
+#+BEGIN_WARNING
+This is a *warning* admonition. Use it to alert readers about potential pitfalls
+or common mistakes that could cause problems.
+#+END_WARNING
+
+#+BEGIN_TIP
+This is a *tip* admonition. Use it for helpful suggestions, best practices,
+or shortcuts that improve the reader's workflow.
+#+END_TIP
+
+#+BEGIN_IMPORTANT
+This is an *important* admonition. Use it for critical information the reader
+must not overlook, such as breaking changes or required configuration.
+#+END_IMPORTANT
+
+#+BEGIN_CAUTION
+This is a *caution* admonition. Use it when an action could lead to data loss
+or irreversible consequences if performed incorrectly.
+#+END_CAUTION
+
+* Tables
+
+Tables use the theme's border and background variables for consistent styling.
+
+| Language   | Paradigm    | Year | Typing   |
+|------------+-------------+------+----------|
+| Emacs Lisp | Functional  | 1985 | Dynamic  |
+| Python     | Multi       | 1991 | Dynamic  |
+| Haskell    | Functional  | 1990 | Static   |
+| Rust       | Systems     | 2010 | Static   |
+| JavaScript | Multi       | 1995 | Dynamic  |
+| Go         | Imperative  | 2009 | Static   |
+| Nix        | Functional  | 2003 | Dynamic  |
+
+** Table with Alignment
+
+|   Right | Center  | Left        |
+|---------+---------+-------------|
+|    1234 | Alpha   | Description |
+|      56 | Beta    | Another row |
+| 7890123 | Gamma   | Third row   |
+
+* Lists
+
+** Unordered List
+
+- First item
+- Second item
+  - Nested item A
+  - Nested item B
+    - Deeply nested
+- Third item
+
+** Ordered List
+
+1. Clone the repository
+2. Enter the development shell
+   1. Run =nix develop=
+   2. Verify tools are available
+3. Build a theme
+4. Export your Org file
+
+** Description List
+
+- readthezero :: Modern, accessible Org-mode HTML export theme
+- readtheorg :: The predecessor theme that inspired this project
+- lightningcss :: CSS bundler and minifier used in the build pipeline
+- Org-mode :: The Emacs major mode for keeping notes, authoring documents, and more
+
+* Blockquotes
+
+#+BEGIN_QUOTE
+"Any sufficiently advanced technology is indistinguishable from magic."
+
+--- Arthur C. Clarke, /Profiles of the Future/ (1962)
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+"Programs must be written for people to read, and only incidentally for machines to execute."
+
+--- Harold Abelson, /Structure and Interpretation of Computer Programs/
+#+END_QUOTE
+
+* Images
+
+Images scale responsively within the content area.
+
+#+CAPTION: Placeholder image (800x400)
+#+ATTR_HTML: :alt Placeholder demonstration image for readthezero
+[[https://placehold.co/800x400/2563eb/ffffff?text=readthezero]]
+
+#+CAPTION: Wide placeholder image (1200x300)
+#+ATTR_HTML: :alt Wide placeholder demonstration image
+[[https://placehold.co/1200x300/059669/ffffff?text=Wide+Image+Example]]
+
+* TODO Items
+
+** TODO Add syntax highlighting integration
+:PROPERTIES:
+:CREATED: [2026-01-15]
+:END:
+
+Investigate integration with highlight.js or Prism for automatic syntax highlighting
+of exported code blocks.
+
+** TODO Write accessibility audit report                          :a11y:docs:
+
+Run axe-core and Lighthouse against the example document and document results.
+
+** DONE Implement 3-column grid layout                      :layout:css:
+:PROPERTIES:
+:CLOSED: [2026-02-01]
+:END:
+
+The responsive 3-column layout using CSS Grid is complete.
+It collapses gracefully on tablet and mobile viewports.
+
+** DONE Add dark mode support                             :theme:a11y:
+:PROPERTIES:
+:CLOSED: [2026-03-10]
+:END:
+
+Dark mode is handled via =light-dark()= with =prefers-color-scheme= fallback.
+
+* Mathematics
+
+Inline math: The quadratic formula is $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+
+Display math using a LaTeX environment:
+
+\begin{equation}
+\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+\end{equation}
+
+Euler's identity:
+
+$$e^{i\pi} + 1 = 0$$
+
+A matrix example:
+
+\begin{equation}
+A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+\end{equation}
+
+* Footnotes
+
+The readthezero theme supports Org-mode footnotes[fn:1] for supplementary detail.
+Multiple footnotes[fn:2] can appear in a single document without conflict.
+
+Inline footnotes are also supported[fn:3:This is an inline footnote defined at the point of use.].
+
+[fn:1] This is the first footnote. It provides additional context without interrupting the main text flow.
+
+[fn:2] Footnotes are rendered at the bottom of the exported HTML document with back-references to their call sites.

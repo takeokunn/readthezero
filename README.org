@@ -1,0 +1,124 @@
+#+TITLE: readthezero
+#+OPTIONS: toc:t num:nil ^:nil
+
+# Badge placeholders
+# [[https://github.com/takeokunn/readthezero/actions][https://img.shields.io/github/actions/workflow/status/takeokunn/readthezero/ci.yml?branch=main]]
+# [[LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
+
+* About
+
+*readthezero* is a modern, accessible HTML export theme for [[https://orgmode.org/][Org-mode]].
+It is the successor to [[https://github.com/fniessen/org-html-themes][readtheorg]], rebuilt from scratch with contemporary CSS.
+
+* Features
+
+- *3-column layout* --- Left navigation, content area, right table of contents (CSS Grid)
+- *Dark mode* --- Automatic via =prefers-color-scheme= with =light-dark()= support
+- *Multiple themes* --- Default, Ocean, and Forest included; easily extensible
+- *WCAG 2.2 AA* --- Accessible color contrast, focus indicators, and skip navigation
+- *CSS-first* --- Minimal JavaScript; layout and theming handled entirely in CSS
+- *RTL support* --- Right-to-left layout via CSS logical properties
+- *Print optimized* --- Clean print stylesheet with no sidebars or UI chrome
+- *Responsive* --- Collapses to single column on tablet and mobile
+
+* Quick Start
+
+1. Add the setup file reference to your =.org= file:
+
+   #+BEGIN_EXAMPLE
+   #+SETUPFILE: https://takeokunn.github.io/readthezero/readthezero-default.setup
+   #+END_EXAMPLE
+
+2. Export to HTML with =C-c C-e h h=.
+
+* Installation
+
+** From GitHub Pages CDN
+
+Add to your Org file header:
+
+#+BEGIN_EXAMPLE
+#+SETUPFILE: https://takeokunn.github.io/readthezero/readthezero-default.setup
+#+END_EXAMPLE
+
+Replace =default= with =ocean= or =forest= for other themes.
+
+** Local Build
+
+Requires [[https://nixos.org/][Nix]] with flakes enabled:
+
+#+BEGIN_SRC shell
+nix build .#default
+#+END_SRC
+
+The output directory contains the CSS, JS, and setup files.
+Copy or symlink them and point =#+SETUPFILE= to the local =.setup= file.
+
+* Available Themes
+
+| Theme   | Description                            |
+|---------+----------------------------------------|
+| default | Neutral palette with blue accents      |
+| ocean   | Cool blue tones inspired by deep water |
+| forest  | Warm green tones inspired by nature    |
+
+* Custom Themes
+
+Create a CSS file that defines =--rtz-*= custom properties on =:root=.
+See =src/themes/_variables.css= for the full variable schema.
+
+#+BEGIN_SRC css
+:root {
+  --rtz-primary: oklch(0.55 0.2 250);
+  --rtz-bg: light-dark(#ffffff, #0f0f0f);
+  --rtz-text: light-dark(#1a1a1a, #e5e5e5);
+  /* ... see _variables.css for all properties ... */
+}
+#+END_SRC
+
+Place your theme file in =src/themes/= and add its name to the =themes= list in =flake.nix=.
+
+* Development
+
+Enter the development shell:
+
+#+BEGIN_SRC shell
+nix develop
+#+END_SRC
+
+Build all themes:
+
+#+BEGIN_SRC shell
+nix build .#all
+#+END_SRC
+
+Build a specific theme:
+
+#+BEGIN_SRC shell
+nix build .#ocean
+#+END_SRC
+
+The dev shell provides =lightningcss= and =stylelint=.
+
+* Browser Support
+
+Baseline Widely Available. Targets browsers with >= 0.25% global usage via =lightningcss=.
+
+* Accessibility
+
+readthezero targets *WCAG 2.2 AA* compliance:
+
+- Color contrast ratios meet AA thresholds in both light and dark modes
+- Focus indicators are visible on all interactive elements
+- Skip-to-content link for keyboard navigation
+- Semantic HTML structure with proper heading hierarchy
+- Reduced motion support via =prefers-reduced-motion=
+
+* License
+
+MIT. See [[file:LICENSE][LICENSE]].
+
+* Credits
+
+Inspired by [[https://github.com/fniessen/org-html-themes][readtheorg]] by Fabrice Niessen.
+Built with [[https://lightningcss.dev/][lightningcss]].

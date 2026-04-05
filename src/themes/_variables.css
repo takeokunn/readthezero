@@ -1,0 +1,72 @@
+/*
+ * readthezero - Theme Variable Schema
+ *
+ * All theme CSS files must define these --rtz-* custom properties.
+ * This file documents the stable API for third-party theme authors.
+ *
+ * Each variable should use light-dark() for automatic dark mode support.
+ * For browsers without light-dark() support, a @supports fallback
+ * with prefers-color-scheme media queries is generated at build time.
+ *
+ * USAGE:
+ *   :root {
+ *     --rtz-primary: oklch(0.55 0.2 250);
+ *     --rtz-bg: light-dark(#ffffff, #0f0f0f);
+ *     ...
+ *   }
+ */
+
+/*
+ * === Color Variables ===
+ *
+ * --rtz-primary           : Primary accent color (links, active states)
+ * --rtz-primary-hover     : Primary color on hover
+ * --rtz-primary-subtle    : Soft variant for backgrounds
+ *
+ * --rtz-bg                : Main background
+ * --rtz-bg-secondary      : Secondary background (cards, sidebars)
+ * --rtz-bg-tertiary       : Tertiary background (code blocks, insets)
+ *
+ * --rtz-text              : Main text color
+ * --rtz-text-secondary    : Secondary text (descriptions, captions)
+ * --rtz-text-muted        : Muted text (timestamps, metadata)
+ *
+ * --rtz-sidebar-bg        : Navigation sidebar background
+ * --rtz-sidebar-text      : Navigation sidebar text
+ * --rtz-sidebar-active-bg : Active nav item background
+ *
+ * --rtz-border            : Default border color
+ * --rtz-border-subtle     : Subtle border color
+ *
+ * --rtz-code-bg           : Code block background
+ * --rtz-code-text         : Code block text
+ * --rtz-code-border       : Code block border
+ *
+ * --rtz-link              : Link color
+ * --rtz-link-hover        : Link hover color
+ *
+ * === Admonition Variables ===
+ *
+ * --rtz-note-bg           : Note admonition background
+ * --rtz-note-border       : Note admonition border
+ * --rtz-warning-bg        : Warning admonition background
+ * --rtz-warning-border    : Warning admonition border
+ * --rtz-danger-bg         : Danger admonition background
+ * --rtz-danger-border     : Danger admonition border
+ * --rtz-tip-bg            : Tip admonition background
+ * --rtz-tip-border        : Tip admonition border
+ *
+ * === Layout Variables ===
+ *
+ * --rtz-sidebar-width     : Navigation sidebar width (default: 260px)
+ * --rtz-toc-width         : TOC sidebar width (default: 220px)
+ * --rtz-content-max-width : Content area max width (default: 52rem)
+ *
+ * === Typography Variables ===
+ *
+ * --rtz-font-body         : Body font stack
+ * --rtz-font-heading      : Heading font stack
+ * --rtz-font-mono         : Monospace font stack
+ * --rtz-font-size-base    : Base font size (default: clamp(1rem, 0.95rem + 0.25vw, 1.125rem))
+ * --rtz-line-height       : Body line height (default: 1.6)
+ */

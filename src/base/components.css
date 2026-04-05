@@ -1,0 +1,202 @@
+/*
+ * readthezero - Org-mode Export Components
+ * Code blocks, admonitions, tables, images, and other structural elements.
+ */
+
+/* ----------------------------------------------------------------
+ * Code blocks
+ * ---------------------------------------------------------------- */
+
+.org-src-container {
+  position: relative;
+  margin-block-end: 1.5rem;
+
+  & label {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.7rem;
+    font-family: var(--rtz-font-mono);
+    color: var(--rtz-text-muted);
+    background: var(--rtz-bg-tertiary);
+    border-radius: 0 0.5rem 0 0.375rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    user-select: none;
+  }
+}
+
+pre.src {
+  background: var(--rtz-code-bg);
+  color: var(--rtz-code-text);
+  border: 1px solid var(--rtz-code-border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  overflow-x: auto;
+  font-family: var(--rtz-font-mono);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  position: relative;
+  margin: 0;
+  tab-size: 2;
+
+  & .rtz-copy-btn {
+    position: absolute;
+    inset-block-start: 0.5rem;
+    inset-inline-end: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.15s;
+    cursor: pointer;
+    background: var(--rtz-bg-secondary);
+    border: 1px solid var(--rtz-border);
+    border-radius: 0.375rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    color: var(--rtz-text);
+    line-height: 1;
+  }
+
+  &:hover .rtz-copy-btn {
+    opacity: 1;
+  }
+}
+
+/* ----------------------------------------------------------------
+ * Admonition blocks (div.note, div.warning, div.tip, etc.)
+ * ---------------------------------------------------------------- */
+
+:is(.note, .warning, .danger, .tip, .caution, .important) {
+  border-inline-start: 4px solid;
+  border-radius: 0.375rem;
+  padding: 1rem 1.25rem;
+  margin-block: 1rem;
+
+  & p:last-child {
+    margin-block-end: 0;
+  }
+
+  & :is(.admonition-title, > p:first-child > strong) {
+    font-weight: 600;
+    margin-block-end: 0.5rem;
+    display: block;
+  }
+}
+
+:is(.note, .important) {
+  background: var(--rtz-note-bg);
+  border-color: var(--rtz-note-border);
+}
+
+:is(.warning, .caution) {
+  background: var(--rtz-warning-bg);
+  border-color: var(--rtz-warning-border);
+}
+
+.danger {
+  background: var(--rtz-danger-bg);
+  border-color: var(--rtz-danger-border);
+}
+
+.tip {
+  background: var(--rtz-tip-bg);
+  border-color: var(--rtz-tip-border);
+}
+
+/* ----------------------------------------------------------------
+ * Tables
+ * ---------------------------------------------------------------- */
+
+.table-container {
+  overflow-x: auto;
+  margin-block-end: 1rem;
+}
+
+:is(.org-table, table) {
+  inline-size: 100%;
+  border-collapse: collapse;
+
+  & th {
+    background: var(--rtz-bg-secondary);
+    font-weight: 600;
+    text-align: start;
+    padding: 0.75rem 1rem;
+    border-block-end: 2px solid var(--rtz-border);
+  }
+
+  & td {
+    padding: 0.5rem 1rem;
+    border-block-end: 1px solid var(--rtz-border-subtle);
+  }
+
+  & tr:nth-child(even) td {
+    background: var(--rtz-bg-tertiary);
+  }
+
+  & tr:hover td {
+    background: var(--rtz-primary-subtle);
+  }
+}
+
+/* ----------------------------------------------------------------
+ * Images and figures
+ * ---------------------------------------------------------------- */
+
+:is(.figure, figure) {
+  margin-block: 1.5rem;
+  text-align: center;
+
+  & img {
+    max-inline-size: 100%;
+    block-size: auto;
+    border-radius: 0.375rem;
+  }
+
+  & figcaption {
+    font-size: 0.875rem;
+    color: var(--rtz-text-secondary);
+    margin-block-start: 0.5rem;
+  }
+}
+
+/* ----------------------------------------------------------------
+ * Definition lists (Org description lists)
+ * ---------------------------------------------------------------- */
+
+dt {
+  font-weight: 600;
+  margin-block-start: 1rem;
+}
+
+dd {
+  margin-inline-start: 1.5rem;
+  margin-block-end: 0.5rem;
+}
+
+/* ----------------------------------------------------------------
+ * Org TODO / DONE keywords
+ * ---------------------------------------------------------------- */
+
+.todo { font-weight: 700; color: var(--rtz-warning-border); }
+.done { font-weight: 700; color: var(--rtz-tip-border); }
+
+/* ----------------------------------------------------------------
+ * Org timestamps
+ * ---------------------------------------------------------------- */
+
+.timestamp {
+  font-family: var(--rtz-font-mono);
+  font-size: 0.875em;
+  color: var(--rtz-text-muted);
+}
+
+/* ----------------------------------------------------------------
+ * Org tags
+ * ---------------------------------------------------------------- */
+
+.tag span {
+  font-size: 0.75rem;
+  background: var(--rtz-bg-tertiary);
+  padding: 0.125rem 0.5rem;
+  border-radius: 1rem;
+}

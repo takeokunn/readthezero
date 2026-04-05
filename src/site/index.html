@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>readthezero - Theme Gallery</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 40rem; margin: 4rem auto; padding: 0 1rem;
+      line-height: 1.6;
+      color: light-dark(#1a1a1a, #e5e5e5);
+      background: light-dark(#fff, #111);
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    p.lead { color: light-dark(#555, #999); margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .card {
+      border: 1px solid light-dark(#ddd, #333); border-radius: 0.75rem;
+      padding: 1.5rem; text-decoration: none; color: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover { border-color: light-dark(#888, #666); box-shadow: 0 2px 8px light-dark(rgba(0,0,0,0.08), rgba(0,0,0,0.3)); }
+    .card h2 { font-size: 1.25rem; margin: 0 0 0.5rem; }
+    .card p { font-size: 0.875rem; color: light-dark(#555, #999); margin: 0; }
+    .badge { display: inline-block; font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 1rem; background: light-dark(#f0f0f0, #222); margin-top: 0.75rem; }
+    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid light-dark(#ddd, #333); font-size: 0.875rem; color: light-dark(#888, #666); }
+  </style>
+</head>
+<body>
+  <h1>readthezero</h1>
+  <p class="lead">Modern, accessible Org-mode HTML export theme. Pick a theme to preview.</p>
+  <div class="grid">
+    <a class="card" href="default/index.html">
+      <h2>Default</h2>
+      <p>Clean, neutral blue-gray accent. Works for any document.</p>
+      <span class="badge">default</span>
+    </a>
+    <a class="card" href="ocean/index.html">
+      <h2>Ocean</h2>
+      <p>Deep blue accents with a nautical feel.</p>
+      <span class="badge">ocean</span>
+    </a>
+    <a class="card" href="forest/index.html">
+      <h2>Forest</h2>
+      <p>Earthy green tones inspired by nature.</p>
+      <span class="badge">forest</span>
+    </a>
+  </div>
+  <footer>readthezero v@VERSION@ &middot; MIT License &middot; <a href="https://github.com/takeokunn/readthezero">GitHub</a></footer>
+</body>
+</html>

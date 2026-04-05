@@ -1,0 +1,28 @@
+/*
+ * readthezero - RTL Support
+ * Edge-case overrides for right-to-left layouts.
+ * Most RTL handling is automatic via CSS logical properties.
+ */
+
+:is(h1, h2, h3, h4, h5, h6, p, li, dd, dt) {
+  text-align: start;
+}
+
+[dir="rtl"] .rtz-hamburger {
+  inset-inline-start: auto;
+  inset-inline-end: 0.75rem;
+}
+
+:is([dir="rtl"] ul, [dir="rtl"] ol) {
+  list-style-position: inside;
+}
+
+/* Source code is inherently LTR */
+:is(pre, code, .src, .example) {
+  direction: ltr;
+  text-align: start;
+}
+
+[dir="rtl"] body::before {
+  transform-origin: inline-end;
+}

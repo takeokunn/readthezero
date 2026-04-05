@@ -1,0 +1,87 @@
+/*
+ * readthezero - Print Stylesheet
+ * Optimized layout and typography for printed output.
+ */
+
+@media print {
+  :is(#table-of-contents, .rtz-hamburger, .rtz-nav-backdrop,
+      .rtz-theme-toggle, .rtz-copy-btn, .rtz-skip-link) {
+    display: none !important;
+  }
+
+  body {
+    display: block;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  #content {
+    max-inline-size: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Show URLs for external links */
+  a[href^="http"]::after,
+  a[href^="//"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    font-style: italic;
+    word-break: break-all;
+  }
+
+  a[href^="#"]::after {
+    content: none;
+  }
+
+  :is(pre, code) {
+    white-space: pre-wrap;
+    border: 1px solid #ccc;
+    background: none !important;
+    color: #000 !important;
+  }
+
+  pre {
+    padding: 0.75em;
+    margin-block: 1em;
+  }
+
+  code {
+    border: none;
+    padding-inline: 0.2em;
+  }
+
+  :is(.note, .warning, .danger, .tip, .caution, .important) {
+    background: none !important;
+    box-shadow: none !important;
+    border: 1px solid #000;
+    padding: 0.75em;
+    margin-block: 1em;
+  }
+
+  :is(h1, h2, h3, h4, h5, h6) {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  :is(pre, code, figure, table, img) {
+    break-inside: avoid;
+  }
+
+  * {
+    box-shadow: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  img {
+    max-inline-size: 100%;
+  }
+
+  :is(p, li) {
+    orphans: 3;
+    widows: 3;
+  }
+}

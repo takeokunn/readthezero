@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - uses: cachix/install-nix-action@6ed6027e4e9f222b485de42b929ec2fcaa1a16c7 # v30
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build all themes
+        run: nix build .#all
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dist
+          path: result/
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - uses: cachix/install-nix-action@6ed6027e4e9f222b485de42b929ec2fcaa1a16c7 # v30
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Lint CSS
+        run: |
+          cd src
+          for f in base/*.css themes/default.css themes/ocean.css themes/forest.css; do
+            echo "Checking $f ..."
+            nix develop --command lightningcss --targets '>= 0.25%' "$f" > /dev/null
+          done

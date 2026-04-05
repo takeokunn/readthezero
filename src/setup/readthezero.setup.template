@@ -1,0 +1,10 @@
+# readthezero v@VERSION@ - @THEME@ theme
+# Usage: #+SETUPFILE: readthezero-@THEME@.setup
+
+#+OPTIONS: html-style:nil toc:nil num:nil ^:nil
+#+HTML_CONTAINER: article
+#+HTML_DOCTYPE: html5
+#+HTML_HEAD: <meta name="viewport" content="width=device-width, initial-scale=1">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="readthezero-base.css">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="readthezero-theme-@THEME@.css">
+#+HTML_HEAD: <script defer src="readthezero.js"></script>

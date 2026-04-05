@@ -1,0 +1,66 @@
+/*
+ * readthezero - Minimal CSS Reset
+ * Normalizes browser defaults for consistent rendering.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: light dark;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-block-size: 100dvh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+:is(img, picture, video, canvas, svg) {
+  display: block;
+  max-inline-size: 100%;
+}
+
+:is(input, button, textarea, select) {
+  font: inherit;
+}
+
+:is(p, h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration-skip-ink: auto;
+}
+
+:is(ul, ol) {
+  list-style-position: inside;
+}
+
+table {
+  border-collapse: collapse;
+  inline-size: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

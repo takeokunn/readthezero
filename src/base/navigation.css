@@ -1,0 +1,35 @@
+/*
+ * readthezero - Navigation Styles
+ * TOC active-link highlighting and theme toggle.
+ * Layout/positioning is handled in layout.css.
+ */
+
+#table-of-contents a.is-active {
+  background: var(--rtz-sidebar-active-bg);
+  color: var(--rtz-primary);
+  font-weight: 600;
+}
+
+/* Theme Toggle Button (JS-created) */
+.rtz-theme-toggle {
+  display: inline-flex;
+  place-content: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: 50%;
+  background: var(--rtz-bg-secondary);
+  border: 1px solid var(--rtz-border);
+  cursor: pointer;
+  color: var(--rtz-text);
+  padding: 0;
+  transition: background-color 0.15s;
+
+  & svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+
+  &:hover {
+    background: var(--rtz-bg-tertiary);
+  }
+}
