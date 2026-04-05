@@ -2,7 +2,7 @@
 #+OPTIONS: toc:t num:nil ^:nil
 
 [[https://github.com/takeokunn/readthezero/actions][https://img.shields.io/github/actions/workflow/status/takeokunn/readthezero/ci.yml?branch=main]]
-[[file:LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
+[[https://github.com/takeokunn/readthezero/blob/main/LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
 
 *readthezero* is a modern, accessible HTML export theme for [[https://orgmode.org/][Org-mode]].
 It is the successor to [[https://github.com/fniessen/org-html-themes][readtheorg]], rebuilt from scratch with contemporary CSS.
@@ -11,7 +11,7 @@ It is the successor to [[https://github.com/fniessen/org-html-themes][readtheorg
 
 * Features
 
-- *3-column layout* --- Left navigation, content area, right table of contents (CSS Grid)
+- *2-column layout* --- Left TOC sidebar and main content area (CSS Grid)
 - *Dark mode* --- Automatic via =prefers-color-scheme= with =light-dark()= support
 - *Multiple themes* --- 15 themes included (default, ocean, forest, nord, dracula, tokyo-night, gruvbox, solarized, arctic, autumn, cherry, contrast, lavender, peach, rose); easily extensible
 - *WCAG 2.2 AA* --- Accessible color contrast, focus indicators, and skip navigation

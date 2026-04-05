@@ -10,7 +10,7 @@ This document demonstrates every visual element supported by the *readthezero* t
 It serves as both user-facing documentation and a visual regression test for theme development.
 
 readthezero is a modern, accessible Org-mode HTML export theme---the successor to readtheorg.
-It provides a responsive 3-column layout, automatic dark mode, and WCAG 2.2 AA compliance.
+It provides a responsive 2-column layout, automatic dark mode, and WCAG 2.2 AA compliance.
 
 To use this theme with your own Org files, uncomment the =#+SETUPFILE= line above
 and replace the URL with the path to your readthezero setup file.
@@ -235,12 +235,12 @@ of exported code blocks.
 
 Run axe-core and Lighthouse against the example document and document results.
 
-** DONE Implement 3-column grid layout                      :layout:css:
+** DONE Implement 2-column grid layout                      :layout:css:
 :PROPERTIES:
 :CLOSED: [2026-02-01]
 :END:
 
-The responsive 3-column layout using CSS Grid is complete.
+The responsive 2-column layout using CSS Grid is complete.
 It collapses gracefully on tablet and mobile viewports.
 
 ** DONE Add dark mode support                             :theme:a11y:
