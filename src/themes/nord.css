@@ -1,0 +1,152 @@
+/*
+ * readthezero - Nord Theme
+ *
+ * Arctic blue-gray palette inspired by Nord. Light mode: crisp snow-white. Dark mode: deep polar night.
+ *
+ * Colors use oklch() for perceptual uniformity and color-mix() for derived variants.
+ * All color combinations meet WCAG 2.2 AA contrast ratios.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --rtz-primary: light-dark(oklch(0.45 0.12 250), oklch(0.72 0.10 250));
+  --rtz-primary-hover: light-dark(
+    color-mix(in oklch, oklch(0.45 0.12 250) 80%, black),
+    color-mix(in oklch, oklch(0.72 0.10 250) 85%, white)
+  );
+  --rtz-primary-subtle: light-dark(
+    color-mix(in oklch, oklch(0.45 0.12 250) 12%, white),
+    color-mix(in oklch, oklch(0.72 0.10 250) 12%, black)
+  );
+
+  --rtz-bg: light-dark(#eceff4, #2e3440);
+  --rtz-bg-secondary: light-dark(#e5e9f0, #3b4252);
+  --rtz-bg-tertiary: light-dark(#d8dee9, #434c5e);
+
+  --rtz-text: light-dark(#2e3440, #eceff4);
+  --rtz-text-secondary: light-dark(#4c566a, #d8dee9);
+  --rtz-text-muted: light-dark(#525f7a, #b0bac8);
+
+  --rtz-sidebar-bg: light-dark(#e5e9f0, #2a3140);
+  --rtz-sidebar-text: light-dark(#4c566a, #d8dee9);
+  --rtz-sidebar-active-bg: light-dark(
+    color-mix(in oklch, oklch(0.45 0.12 250) 10%, #eceff4),
+    color-mix(in oklch, oklch(0.72 0.10 250) 10%, #2e3440)
+  );
+
+  --rtz-border: light-dark(#d0d6e0, #3d4458);
+  --rtz-border-subtle: light-dark(#dde1ec, #323948);
+
+  --rtz-code-bg: light-dark(#e5e9f0, #2a3140);
+  --rtz-code-text: light-dark(#2e3440, #d8dee9);
+  --rtz-code-border: light-dark(#d0d6e0, #3d4458);
+
+  --rtz-link: light-dark(oklch(0.45 0.12 250), oklch(0.72 0.10 250));
+  --rtz-link-hover: light-dark(
+    color-mix(in oklch, oklch(0.45 0.12 250) 80%, black),
+    color-mix(in oklch, oklch(0.72 0.10 250) 85%, white)
+  );
+
+  --rtz-note-bg: light-dark(
+    color-mix(in oklch, oklch(0.6 0.14 250) 8%, white),
+    color-mix(in oklch, oklch(0.55 0.12 250) 10%, #2e3440)
+  );
+  --rtz-note-border: light-dark(oklch(0.6 0.14 250), oklch(0.55 0.12 250));
+
+  --rtz-warning-bg: light-dark(
+    color-mix(in oklch, oklch(0.72 0.13 85) 8%, white),
+    color-mix(in oklch, oklch(0.62 0.12 85) 10%, #2e3440)
+  );
+  --rtz-warning-border: light-dark(oklch(0.72 0.13 85), oklch(0.62 0.12 85));
+
+  --rtz-danger-bg: light-dark(
+    color-mix(in oklch, oklch(0.55 0.18 25) 8%, white),
+    color-mix(in oklch, oklch(0.60 0.16 25) 10%, #2e3440)
+  );
+  --rtz-danger-border: light-dark(oklch(0.55 0.18 25), oklch(0.60 0.16 25));
+
+  --rtz-tip-bg: light-dark(
+    color-mix(in oklch, oklch(0.58 0.14 150) 8%, white),
+    color-mix(in oklch, oklch(0.53 0.12 150) 10%, #2e3440)
+  );
+  --rtz-tip-border: light-dark(oklch(0.58 0.14 150), oklch(0.53 0.12 150));
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --rtz-primary: oklch(0.45 0.12 250);
+  --rtz-primary-hover: color-mix(in oklch, oklch(0.45 0.12 250) 80%, black);
+  --rtz-primary-subtle: color-mix(in oklch, oklch(0.45 0.12 250) 12%, white);
+
+  --rtz-bg: #eceff4;
+  --rtz-bg-secondary: #e5e9f0;
+  --rtz-bg-tertiary: #d8dee9;
+
+  --rtz-text: #2e3440;
+  --rtz-text-secondary: #4c566a;
+  --rtz-text-muted: #525f7a;
+
+  --rtz-sidebar-bg: #e5e9f0;
+  --rtz-sidebar-text: #4c566a;
+  --rtz-sidebar-active-bg: color-mix(in oklch, oklch(0.45 0.12 250) 10%, #eceff4);
+
+  --rtz-border: #d0d6e0;
+  --rtz-border-subtle: #dde1ec;
+
+  --rtz-code-bg: #e5e9f0;
+  --rtz-code-text: #2e3440;
+  --rtz-code-border: #d0d6e0;
+
+  --rtz-link: oklch(0.45 0.12 250);
+  --rtz-link-hover: color-mix(in oklch, oklch(0.45 0.12 250) 80%, black);
+
+  --rtz-note-bg: color-mix(in oklch, oklch(0.6 0.14 250) 8%, white);
+  --rtz-note-border: oklch(0.6 0.14 250);
+  --rtz-warning-bg: color-mix(in oklch, oklch(0.72 0.13 85) 8%, white);
+  --rtz-warning-border: oklch(0.72 0.13 85);
+  --rtz-danger-bg: color-mix(in oklch, oklch(0.55 0.18 25) 8%, white);
+  --rtz-danger-border: oklch(0.55 0.18 25);
+  --rtz-tip-bg: color-mix(in oklch, oklch(0.58 0.14 150) 8%, white);
+  --rtz-tip-border: oklch(0.58 0.14 150);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --rtz-primary: oklch(0.72 0.10 250);
+  --rtz-primary-hover: color-mix(in oklch, oklch(0.72 0.10 250) 85%, white);
+  --rtz-primary-subtle: color-mix(in oklch, oklch(0.72 0.10 250) 12%, #2e3440);
+
+  --rtz-bg: #2e3440;
+  --rtz-bg-secondary: #3b4252;
+  --rtz-bg-tertiary: #434c5e;
+
+  --rtz-text: #eceff4;
+  --rtz-text-secondary: #d8dee9;
+  --rtz-text-muted: #b0bac8;
+
+  --rtz-sidebar-bg: #2a3140;
+  --rtz-sidebar-text: #d8dee9;
+  --rtz-sidebar-active-bg: color-mix(in oklch, oklch(0.72 0.10 250) 10%, #2e3440);
+
+  --rtz-border: #3d4458;
+  --rtz-border-subtle: #323948;
+
+  --rtz-code-bg: #2a3140;
+  --rtz-code-text: #d8dee9;
+  --rtz-code-border: #3d4458;
+
+  --rtz-link: oklch(0.72 0.10 250);
+  --rtz-link-hover: color-mix(in oklch, oklch(0.72 0.10 250) 85%, white);
+
+  --rtz-note-bg: color-mix(in oklch, oklch(0.55 0.12 250) 10%, #2e3440);
+  --rtz-note-border: oklch(0.55 0.12 250);
+  --rtz-warning-bg: color-mix(in oklch, oklch(0.62 0.12 85) 10%, #2e3440);
+  --rtz-warning-border: oklch(0.62 0.12 85);
+  --rtz-danger-bg: color-mix(in oklch, oklch(0.60 0.16 25) 10%, #2e3440);
+  --rtz-danger-border: oklch(0.60 0.16 25);
+  --rtz-tip-bg: color-mix(in oklch, oklch(0.53 0.12 150) 10%, #2e3440);
+  --rtz-tip-border: oklch(0.53 0.12 150);
+}

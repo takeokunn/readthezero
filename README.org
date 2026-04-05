@@ -14,7 +14,7 @@ It is the successor to [[https://github.com/fniessen/org-html-themes][readtheorg
 
 - *3-column layout* --- Left navigation, content area, right table of contents (CSS Grid)
 - *Dark mode* --- Automatic via =prefers-color-scheme= with =light-dark()= support
-- *Multiple themes* --- Default, Ocean, and Forest included; easily extensible
+- *Multiple themes* --- 15 themes included (default, ocean, forest, nord, dracula, tokyo-night, gruvbox, solarized, arctic, autumn, cherry, contrast, lavender, peach, rose); easily extensible
 - *WCAG 2.2 AA* --- Accessible color contrast, focus indicators, and skip navigation
 - *CSS-first* --- Minimal JavaScript; layout and theming handled entirely in CSS
 - *RTL support* --- Right-to-left layout via CSS logical properties
@@ -41,7 +41,7 @@ Add to your Org file header:
 #+SETUPFILE: https://takeokunn.github.io/readthezero/readthezero-default.setup
 #+END_EXAMPLE
 
-Replace =default= with =ocean= or =forest= for other themes.
+Replace =default= with any available theme name: =ocean=, =forest=, =nord=, =dracula=, =tokyo-night=, =gruvbox=, =solarized=, =arctic=, =autumn=, =cherry=, =contrast=, =lavender=, =peach=, or =rose=.
 
 ** Local Build
 
@@ -56,11 +56,23 @@ Copy or symlink them and point =#+SETUPFILE= to the local =.setup= file.
 
 * Available Themes
 
-| Theme   | Description                            |
-|---------+----------------------------------------|
-| default | Neutral palette with blue accents      |
-| ocean   | Cool blue tones inspired by deep water |
-| forest  | Warm green tones inspired by nature    |
+| Theme       | Description                                   |
+|-------------+-----------------------------------------------|
+| default     | Neutral palette with blue accents             |
+| ocean       | Cool blue tones inspired by deep water        |
+| forest      | Warm green tones inspired by nature           |
+| nord        | Arctic, north-bluish palette                  |
+| dracula     | Dark theme with vivid purple accents          |
+| tokyo-night | Dark theme inspired by Tokyo city at night    |
+| gruvbox     | Retro groove with warm earthy tones           |
+| solarized   | Precision colors for machines and people      |
+| arctic      | Clean cool whites and icy blues               |
+| autumn      | Warm oranges and reds of the fall season      |
+| cherry      | Soft pinks and cherry blossom tones           |
+| contrast    | High-contrast theme for maximum readability   |
+| lavender    | Soft purple and lavender tones                |
+| peach       | Warm peach and apricot palette                |
+| rose        | Elegant rose and dusty pink tones             |
 
 * Custom Themes
 

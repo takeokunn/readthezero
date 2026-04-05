@@ -71,31 +71,72 @@ const initThemeToggle = () => {
   });
 };
 
-// TOC active heading tracking via IntersectionObserver
+// TOC active heading tracking via IntersectionObserver (left TOC + right outline)
 const initTocHighlight = () => {
   const tocList = document.getElementById("text-table-of-contents");
-  if (!tocList) return;
+  const outline = document.getElementById("rtz-outline");
+  if (!tocList && !outline) return;
 
   const headings = document.querySelectorAll("#content :is(h2, h3, h4)");
   if (!headings.length) return;
 
-  let activeLink = null;
+  const containers = [tocList, outline].filter(Boolean);
+  const activeLinks = new WeakMap();
 
   const observer = new IntersectionObserver(
     (entries) => {
       for (const { isIntersecting, target } of entries) {
         if (!isIntersecting || !target.id) continue;
-        const link = tocList.querySelector(`a[href="#${CSS.escape(target.id)}"]`);
-        if (!link) continue;
-        activeLink?.classList.remove("is-active");
-        link.classList.add("is-active");
-        activeLink = link;
+        for (const container of containers) {
+          const link = container.querySelector(`a[href="#${CSS.escape(target.id)}"]`);
+          if (!link) continue;
+          activeLinks.get(container)?.classList.remove("is-active");
+          link.classList.add("is-active");
+          activeLinks.set(container, link);
+        }
       }
     },
     { rootMargin: "-10% 0px -80% 0px" },
   );
 
   for (const heading of headings) observer.observe(heading);
+};
+
+// Build right outline panel from page headings (h2/h3)
+const initOutline = () => {
+  const content = document.getElementById("content");
+  if (!content) return;
+
+  const headings = content.querySelectorAll("h2, h3");
+  if (!headings.length) return;
+
+  const outline = document.createElement("nav");
+  outline.id = "rtz-outline";
+  outline.setAttribute("aria-label", "On this page");
+
+  const title = document.createElement("p");
+  title.className = "rtz-outline-title";
+  title.textContent = "On this page";
+  outline.append(title);
+
+  const ul = document.createElement("ul");
+  for (const heading of headings) {
+    if (!heading.id) continue;
+    const li = document.createElement("li");
+    li.dataset.level = heading.tagName.toLowerCase();
+
+    const a = document.createElement("a");
+    a.href = `#${heading.id}`;
+
+    const clone = heading.cloneNode(true);
+    clone.querySelectorAll("span[class*='section-number']").forEach((el) => el.remove());
+    a.textContent = clone.textContent.trim();
+
+    li.append(a);
+    ul.append(li);
+  }
+  outline.append(ul);
+  document.body.append(outline);
 };
 
 // Mobile sidebar overlay with focus trap
@@ -181,6 +222,7 @@ const initCopyButtons = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initLayout();
+  initOutline();
   initThemeToggle();
   initTocHighlight();
   initMobileNav();

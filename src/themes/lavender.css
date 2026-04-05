@@ -1,0 +1,152 @@
+/*
+ * readthezero - Lavender Theme
+ *
+ * Soft purple-toned theme. Light mode: pale lavender-white. Dark mode: deep indigo.
+ *
+ * Colors use oklch() for perceptual uniformity and color-mix() for derived variants.
+ * All color combinations meet WCAG 2.2 AA contrast ratios.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --rtz-primary: light-dark(oklch(0.52 0.13 285), oklch(0.73 0.11 285));
+  --rtz-primary-hover: light-dark(
+    color-mix(in oklch, oklch(0.52 0.13 285) 80%, black),
+    color-mix(in oklch, oklch(0.73 0.11 285) 85%, white)
+  );
+  --rtz-primary-subtle: light-dark(
+    color-mix(in oklch, oklch(0.52 0.13 285) 12%, white),
+    color-mix(in oklch, oklch(0.73 0.11 285) 12%, black)
+  );
+
+  --rtz-bg: light-dark(#f7f5ff, #14111e);
+  --rtz-bg-secondary: light-dark(#ede8ff, #1c1828);
+  --rtz-bg-tertiary: light-dark(#e4defc, #241f32);
+
+  --rtz-text: light-dark(#1a1228, #e2daf0);
+  --rtz-text-secondary: light-dark(#3e3858, #b8b0d0);
+  --rtz-text-muted: light-dark(#5e5878, #9890b8);
+
+  --rtz-sidebar-bg: light-dark(#ede8ff, #100e18);
+  --rtz-sidebar-text: light-dark(#3e3858, #b8b0d0);
+  --rtz-sidebar-active-bg: light-dark(
+    color-mix(in oklch, oklch(0.52 0.13 285) 10%, #f7f5ff),
+    color-mix(in oklch, oklch(0.73 0.11 285) 10%, #14111e)
+  );
+
+  --rtz-border: light-dark(#ccc4e8, #302840);
+  --rtz-border-subtle: light-dark(#dcd6f4, #281e38);
+
+  --rtz-code-bg: light-dark(#ede8ff, #100e18);
+  --rtz-code-text: light-dark(#1a1228, #e2daf0);
+  --rtz-code-border: light-dark(#ccc4e8, #302840);
+
+  --rtz-link: light-dark(oklch(0.52 0.13 285), oklch(0.73 0.11 285));
+  --rtz-link-hover: light-dark(
+    color-mix(in oklch, oklch(0.52 0.13 285) 80%, black),
+    color-mix(in oklch, oklch(0.73 0.11 285) 85%, white)
+  );
+
+  --rtz-note-bg: light-dark(
+    color-mix(in oklch, oklch(0.55 0.14 285) 8%, white),
+    color-mix(in oklch, oklch(0.73 0.12 285) 10%, #14111e)
+  );
+  --rtz-note-border: light-dark(oklch(0.55 0.14 285), oklch(0.73 0.12 285));
+
+  --rtz-warning-bg: light-dark(
+    color-mix(in oklch, oklch(0.70 0.14 80) 8%, white),
+    color-mix(in oklch, oklch(0.72 0.13 80) 10%, #14111e)
+  );
+  --rtz-warning-border: light-dark(oklch(0.70 0.14 80), oklch(0.72 0.13 80));
+
+  --rtz-danger-bg: light-dark(
+    color-mix(in oklch, oklch(0.52 0.18 20) 8%, white),
+    color-mix(in oklch, oklch(0.68 0.16 20) 10%, #14111e)
+  );
+  --rtz-danger-border: light-dark(oklch(0.52 0.18 20), oklch(0.68 0.16 20));
+
+  --rtz-tip-bg: light-dark(
+    color-mix(in oklch, oklch(0.56 0.14 155) 8%, white),
+    color-mix(in oklch, oklch(0.65 0.12 155) 10%, #14111e)
+  );
+  --rtz-tip-border: light-dark(oklch(0.56 0.14 155), oklch(0.65 0.12 155));
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --rtz-primary: oklch(0.52 0.13 285);
+  --rtz-primary-hover: color-mix(in oklch, oklch(0.52 0.13 285) 80%, black);
+  --rtz-primary-subtle: color-mix(in oklch, oklch(0.52 0.13 285) 12%, white);
+
+  --rtz-bg: #f7f5ff;
+  --rtz-bg-secondary: #ede8ff;
+  --rtz-bg-tertiary: #e4defc;
+
+  --rtz-text: #1a1228;
+  --rtz-text-secondary: #3e3858;
+  --rtz-text-muted: #5e5878;
+
+  --rtz-sidebar-bg: #ede8ff;
+  --rtz-sidebar-text: #3e3858;
+  --rtz-sidebar-active-bg: color-mix(in oklch, oklch(0.52 0.13 285) 10%, #f7f5ff);
+
+  --rtz-border: #ccc4e8;
+  --rtz-border-subtle: #dcd6f4;
+
+  --rtz-code-bg: #ede8ff;
+  --rtz-code-text: #1a1228;
+  --rtz-code-border: #ccc4e8;
+
+  --rtz-link: oklch(0.52 0.13 285);
+  --rtz-link-hover: color-mix(in oklch, oklch(0.52 0.13 285) 80%, black);
+
+  --rtz-note-bg: color-mix(in oklch, oklch(0.55 0.14 285) 8%, white);
+  --rtz-note-border: oklch(0.55 0.14 285);
+  --rtz-warning-bg: color-mix(in oklch, oklch(0.70 0.14 80) 8%, white);
+  --rtz-warning-border: oklch(0.70 0.14 80);
+  --rtz-danger-bg: color-mix(in oklch, oklch(0.52 0.18 20) 8%, white);
+  --rtz-danger-border: oklch(0.52 0.18 20);
+  --rtz-tip-bg: color-mix(in oklch, oklch(0.56 0.14 155) 8%, white);
+  --rtz-tip-border: oklch(0.56 0.14 155);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --rtz-primary: oklch(0.73 0.11 285);
+  --rtz-primary-hover: color-mix(in oklch, oklch(0.73 0.11 285) 85%, white);
+  --rtz-primary-subtle: color-mix(in oklch, oklch(0.73 0.11 285) 12%, black);
+
+  --rtz-bg: #14111e;
+  --rtz-bg-secondary: #1c1828;
+  --rtz-bg-tertiary: #241f32;
+
+  --rtz-text: #e2daf0;
+  --rtz-text-secondary: #b8b0d0;
+  --rtz-text-muted: #9890b8;
+
+  --rtz-sidebar-bg: #100e18;
+  --rtz-sidebar-text: #b8b0d0;
+  --rtz-sidebar-active-bg: color-mix(in oklch, oklch(0.73 0.11 285) 10%, #14111e);
+
+  --rtz-border: #302840;
+  --rtz-border-subtle: #281e38;
+
+  --rtz-code-bg: #100e18;
+  --rtz-code-text: #e2daf0;
+  --rtz-code-border: #302840;
+
+  --rtz-link: oklch(0.73 0.11 285);
+  --rtz-link-hover: color-mix(in oklch, oklch(0.73 0.11 285) 85%, white);
+
+  --rtz-note-bg: color-mix(in oklch, oklch(0.73 0.12 285) 10%, #14111e);
+  --rtz-note-border: oklch(0.73 0.12 285);
+  --rtz-warning-bg: color-mix(in oklch, oklch(0.72 0.13 80) 10%, #14111e);
+  --rtz-warning-border: oklch(0.72 0.13 80);
+  --rtz-danger-bg: color-mix(in oklch, oklch(0.68 0.16 20) 10%, #14111e);
+  --rtz-danger-border: oklch(0.68 0.16 20);
+  --rtz-tip-bg: color-mix(in oklch, oklch(0.65 0.12 155) 10%, #14111e);
+  --rtz-tip-border: oklch(0.65 0.12 155);
+}

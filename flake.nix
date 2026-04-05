@@ -21,6 +21,18 @@
         "default"
         "ocean"
         "forest"
+        "arctic"
+        "autumn"
+        "cherry"
+        "contrast"
+        "dracula"
+        "gruvbox"
+        "lavender"
+        "nord"
+        "peach"
+        "rose"
+        "solarized"
+        "tokyo-night"
       ];
     in
     {
@@ -160,9 +172,7 @@
             SITE=$(nix build .#site --no-link --print-out-paths 2>/dev/null)
             PORT=''${1:-8080}
             echo "Serving readthezero at http://localhost:$PORT"
-            echo "  Default: http://localhost:$PORT/default/index.html"
-            echo "  Ocean:   http://localhost:$PORT/ocean/index.html"
-            echo "  Forest:  http://localhost:$PORT/forest/index.html"
+            ${builtins.concatStringsSep "\n" (map (name: "  echo \"  ${name}: http://localhost:\$PORT/${name}/index.html\"") themes)}
             echo ""
             ${pkgs.python3}/bin/python3 -m http.server "$PORT" --directory "$SITE"
           '';
@@ -213,7 +223,7 @@
               echo "Checking $f ..."
               lightningcss --targets '>= 0.25%' "$f" > /dev/null
             done
-            for f in themes/default.css themes/ocean.css themes/forest.css; do
+            for f in ${builtins.concatStringsSep " " (map (name: "themes/${name}.css") themes)}; do
               echo "Checking $f ..."
               lightningcss --targets '>= 0.25%' "$f" > /dev/null
             done
@@ -245,12 +255,17 @@ Build:
   nix build .#default         # Build default theme
   nix build .#ocean           # Build ocean theme
   nix build .#forest          # Build forest theme
-  nix build .#all             # Build all themes
+  nix build .#nord            # Build nord theme
+  nix build .#dracula         # Build dracula theme
+  nix build .#tokyo-night     # Build tokyo-night theme
+  nix build .#all             # Build all themes (15 total)
 
 Example:
   nix build .#example         # Export example with default theme
   nix build .#example-ocean   # Export example with ocean theme
   nix build .#example-forest  # Export example with forest theme
+  nix build .#example-nord    # Export example with nord theme
+  nix build .#example-dracula # Export example with dracula theme
   nix build .#site            # Build full example site (all themes)
 
 Preview:
