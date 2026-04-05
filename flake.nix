@@ -157,6 +157,13 @@
                 map (name: ''
                   mkdir -p $out/${name}
                   cp -r ${buildExample name}/* $out/${name}/
+
+                  # Deploy CDN setup file with absolute URLs for remote #+SETUPFILE usage
+                  cp ${buildTheme name}/readthezero-${name}.setup $out/readthezero-${name}.setup
+                  substituteInPlace $out/readthezero-${name}.setup \
+                    --replace-fail 'href="readthezero-base.css"' 'href="https://takeokunn.github.io/readthezero/${name}/assets/readthezero-base.css"' \
+                    --replace-fail 'href="readthezero-theme-${name}.css"' 'href="https://takeokunn.github.io/readthezero/${name}/assets/readthezero-theme-${name}.css"' \
+                    --replace-fail 'src="readthezero.js"' 'src="https://takeokunn.github.io/readthezero/${name}/assets/readthezero.js"'
                 '') themes
               )}
 
