@@ -1,7 +1,7 @@
 #+TITLE: readthezero
 #+OPTIONS: toc:t num:nil ^:nil
 
-[[https://github.com/takeokunn/readthezero/actions][https://img.shields.io/github/actions/workflow/status/takeokunn/readthezero/ci.yml?branch=main]]
+[[https://github.com/takeokunn/readthezero/actions/workflows/ci.yml][https://img.shields.io/github/actions/workflow/status/takeokunn/readthezero/ci.yml?branch=main]]
 [[https://github.com/takeokunn/readthezero/blob/main/LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
 
 *readthezero* is a modern, accessible HTML export theme for [[https://orgmode.org/][Org-mode]].
