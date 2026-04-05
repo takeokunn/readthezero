@@ -12,7 +12,7 @@ const ICON_THEME = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 const THEME_CYCLE = { light: "dark", dark: null, undefined: "light" };
 
-// Move TOC out of #content for CSS Grid layout
+// Move TOC out of #content for 2-column CSS Grid layout
 // Runtime DOM: body > #table-of-contents + #content
 const initLayout = () => {
   const toc = document.getElementById("table-of-contents");
@@ -71,72 +71,50 @@ const initThemeToggle = () => {
   });
 };
 
-// TOC active heading tracking via IntersectionObserver (left TOC + right outline)
+// Restructure TOC links that contain TODO/DONE badges
+// Wraps non-badge content so flex-column ordering works cleanly
+const initTocItems = () => {
+  for (const a of document.querySelectorAll("#table-of-contents a")) {
+    const badge = a.querySelector(":is(.todo, .done)");
+    if (!badge) continue;
+
+    const tag = a.querySelector(".tag");
+    const otherNodes = [...a.childNodes].filter((n) => n !== badge && n !== tag);
+
+    const label = document.createElement("span");
+    label.className = "rtz-toc-label";
+    for (const n of otherNodes) label.append(n);
+
+    a.prepend(label);
+    a.prepend(badge);
+  }
+};
+
+// TOC active heading tracking via IntersectionObserver
 const initTocHighlight = () => {
   const tocList = document.getElementById("text-table-of-contents");
-  const outline = document.getElementById("rtz-outline");
-  if (!tocList && !outline) return;
+  if (!tocList) return;
 
   const headings = document.querySelectorAll("#content :is(h2, h3, h4)");
   if (!headings.length) return;
 
-  const containers = [tocList, outline].filter(Boolean);
-  const activeLinks = new WeakMap();
+  const activeLink = { current: null };
 
   const observer = new IntersectionObserver(
     (entries) => {
       for (const { isIntersecting, target } of entries) {
         if (!isIntersecting || !target.id) continue;
-        for (const container of containers) {
-          const link = container.querySelector(`a[href="#${CSS.escape(target.id)}"]`);
-          if (!link) continue;
-          activeLinks.get(container)?.classList.remove("is-active");
-          link.classList.add("is-active");
-          activeLinks.set(container, link);
-        }
+        const link = tocList.querySelector(`a[href="#${CSS.escape(target.id)}"]`);
+        if (!link) continue;
+        activeLink.current?.classList.remove("is-active");
+        link.classList.add("is-active");
+        activeLink.current = link;
       }
     },
     { rootMargin: "-10% 0px -80% 0px" },
   );
 
   for (const heading of headings) observer.observe(heading);
-};
-
-// Build right outline panel from page headings (h2/h3)
-const initOutline = () => {
-  const content = document.getElementById("content");
-  if (!content) return;
-
-  const headings = content.querySelectorAll("h2, h3");
-  if (!headings.length) return;
-
-  const outline = document.createElement("nav");
-  outline.id = "rtz-outline";
-  outline.setAttribute("aria-label", "On this page");
-
-  const title = document.createElement("p");
-  title.className = "rtz-outline-title";
-  title.textContent = "On this page";
-  outline.append(title);
-
-  const ul = document.createElement("ul");
-  for (const heading of headings) {
-    if (!heading.id) continue;
-    const li = document.createElement("li");
-    li.dataset.level = heading.tagName.toLowerCase();
-
-    const a = document.createElement("a");
-    a.href = `#${heading.id}`;
-
-    const clone = heading.cloneNode(true);
-    clone.querySelectorAll("span[class*='section-number']").forEach((el) => el.remove());
-    a.textContent = clone.textContent.trim();
-
-    li.append(a);
-    ul.append(li);
-  }
-  outline.append(ul);
-  document.body.append(outline);
 };
 
 // Mobile sidebar overlay with focus trap
@@ -222,7 +200,7 @@ const initCopyButtons = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initLayout();
-  initOutline();
+  initTocItems();
   initThemeToggle();
   initTocHighlight();
   initMobileNav();

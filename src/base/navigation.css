@@ -4,8 +4,7 @@
  * Layout/positioning is handled in layout.css.
  */
 
-#table-of-contents a.is-active,
-#rtz-outline a.is-active {
+#table-of-contents a.is-active {
   background: var(--rtz-sidebar-active-bg);
   color: var(--rtz-primary);
   font-weight: 600;

@@ -1,8 +1,8 @@
 /*
- * readthezero - 3-Column CSS Grid Layout
- * Left TOC sidebar | Content | Right outline
- * JS moves #table-of-contents out of #content and creates #rtz-outline.
- * Runtime DOM: body > #table-of-contents + #content + #rtz-outline
+ * readthezero - 2-Column CSS Grid Layout
+ * Left TOC sidebar | Content
+ * JS moves #table-of-contents out of #content.
+ * Runtime DOM: body > #table-of-contents + #content
  */
 
 /* Scroll progress bar (progressive enhancement) */
@@ -46,8 +46,8 @@
 /* Grid container */
 body {
   display: grid;
-  grid-template-columns: var(--rtz-sidebar-width) 1fr var(--rtz-toc-width);
-  grid-template-areas: "toc content outline";
+  grid-template-columns: var(--rtz-sidebar-width) 1fr;
+  grid-template-areas: "toc content";
   min-block-size: 100dvh;
 }
 
@@ -92,6 +92,7 @@ body {
     color: var(--rtz-sidebar-text);
     text-decoration: none;
     display: block;
+    text-align: left;
     padding: 0.2rem 0.5rem;
     border-radius: 0.25rem;
     transition: background 0.15s, color 0.15s;
@@ -100,6 +101,30 @@ body {
       background: var(--rtz-bg-secondary);
       color: var(--rtz-primary);
     }
+
+    /* Flex-column layout only for links with a TODO/DONE badge (set by JS) */
+    &:has(:is(.todo, .done)) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15em;
+    }
+  }
+
+  /* Hide tag pills — they overflow the narrow sidebar */
+  & .tag {
+    display: none;
+  }
+
+  /* TODO/DONE badge above the title */
+  & :is(.todo, .done) {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.1em 0.35em;
+    border-radius: 0.2rem;
+    line-height: 1.4;
+    background: color-mix(in oklch, currentColor 15%, transparent);
   }
 }
 
@@ -109,56 +134,6 @@ body {
   max-inline-size: var(--rtz-content-max-width);
   padding: 2rem 2.5rem;
   min-inline-size: 0;
-}
-
-/* Right outline panel (JS-created) */
-#rtz-outline {
-  grid-area: outline;
-  position: sticky;
-  inset-block-start: 0;
-  block-size: 100dvh;
-  overflow-y: auto;
-  padding: 1.5rem 1rem;
-  border-inline-start: 1px solid var(--rtz-border);
-  scrollbar-width: thin;
-  font-size: 0.875rem;
-
-  & .rtz-outline-title {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-block-end: 0.75rem;
-    color: var(--rtz-sidebar-text);
-  }
-
-  & ul {
-    list-style: none;
-    padding-inline-start: 0;
-    margin: 0;
-  }
-
-  & li {
-    margin-block-end: 0.25rem;
-
-    &[data-level="h3"] {
-      padding-inline-start: 1rem;
-    }
-  }
-
-  & a {
-    color: var(--rtz-sidebar-text);
-    text-decoration: none;
-    display: block;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.25rem;
-    transition: background 0.15s, color 0.15s;
-
-    &:hover {
-      background: var(--rtz-bg-secondary);
-      color: var(--rtz-primary);
-    }
-  }
 }
 
 /* Mobile overlay backdrop (JS-created) */
@@ -192,18 +167,6 @@ body {
   & svg {
     inline-size: 1.25rem;
     block-size: 1.25rem;
-  }
-}
-
-/* Wide desktop: hide right outline, switch to 2-column */
-@media (width <= 1280px) {
-  body {
-    grid-template-columns: var(--rtz-sidebar-width) 1fr;
-    grid-template-areas: "toc content";
-  }
-
-  #rtz-outline {
-    display: none;
   }
 }
 
