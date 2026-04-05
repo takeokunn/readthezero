@@ -1,49 +1,28 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "src/**"
-      - "example/**"
-  release:
-    types:
-      - published
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup nix
-        uses: ./.github/actions/setup-nix
-        with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-
-      - name: Build site
-        run: |
-          nix build .#site
-          cp -rL result site
-
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: site
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          run_id: ${{ github.event.workflow_run.id }}

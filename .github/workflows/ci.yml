@@ -6,9 +6,16 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
     steps:
       - uses: actions/checkout@v6
 
@@ -17,29 +24,16 @@ jobs:
         with:
           cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      - name: Build all themes
-        run: nix build .#all
-
-      - name: Upload dist artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: dist
-          path: result/
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup nix
-        uses: ./.github/actions/setup-nix
-        with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Build site
+        run: |
+          nix build .#site
+          cp -rL result site
 
       - name: Lint CSS
-        run: |
-          cd src
-          for f in base/*.css themes/default.css themes/ocean.css themes/forest.css; do
-            echo "Checking $f ..."
-            nix develop --command lightningcss --targets '>= 0.25%' "$f" > /dev/null
-          done
+        run: nix build .#checks.x86_64-linux.lint
+
+      - name: Upload pages artifact
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
