@@ -21,8 +21,16 @@ jobs:
 
       - name: Setup nix
         uses: ./.github/actions/setup-nix
+
+      # Best-effort: keeps CI green before the dedicated cache exists, and
+      # activates fully (pull + auto-push) once takeokunn-readthezero is created.
+      - name: Setup Cachix
+        continue-on-error: true
+        uses: cachix/cachix-action@v17
         with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          name: takeokunn-readthezero
+          extraPullNames: takeokunn-nixos-configuration
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Run all checks
         run: nix flake check --print-build-logs
