@@ -164,23 +164,66 @@ const initMobileNav = () => {
   });
 };
 
-// Code copy buttons on pre.src blocks
-const initCopyButtons = () => {
+// Human-friendly labels for Org src-block language classes
+const LANG_LABELS = {
+  "emacs-lisp": "Emacs Lisp",
+  elisp: "Emacs Lisp",
+  javascript: "JavaScript",
+  js: "JavaScript",
+  typescript: "TypeScript",
+  ts: "TypeScript",
+  python: "Python",
+  css: "CSS",
+  html: "HTML",
+  json: "JSON",
+  yaml: "YAML",
+  bash: "Bash",
+  shell: "Shell",
+  sh: "Shell",
+  rust: "Rust",
+  go: "Go",
+  c: "C",
+  cpp: "C++",
+  haskell: "Haskell",
+  nix: "Nix",
+  sql: "SQL",
+};
+
+const prettyLang = (lang) =>
+  LANG_LABELS[lang] ?? lang.charAt(0).toUpperCase() + lang.slice(1);
+
+// Code block enhancements: language label + copy-to-clipboard button.
+// Both controls live in a toolbar on the wrapping .org-src-container so the
+// language sits top-start and the copy button top-end without overlapping,
+// and neither pollutes the code text captured for copying.
+const initCodeBlocks = () => {
   for (const pre of document.querySelectorAll("pre.src")) {
+    const container = pre.closest(".org-src-container") ?? pre;
+    const codeText = pre.textContent;
+
+    const toolbar = document.createElement("div");
+    toolbar.className = "rtz-code-toolbar";
+
+    const langClass = [...pre.classList].find(
+      (c) => c.startsWith("src-") && c !== "src",
+    );
+    if (langClass) {
+      const label = document.createElement("span");
+      label.className = "rtz-code-lang";
+      label.textContent = prettyLang(langClass.slice(4));
+      toolbar.append(label);
+    }
+
     const btn = document.createElement("button");
     btn.className = "rtz-copy-btn";
+    btn.type = "button";
     btn.textContent = "Copy";
     btn.setAttribute("aria-label", "Copy code to clipboard");
-    btn.setAttribute("role", "status");
     btn.setAttribute("aria-live", "polite");
 
     btn.addEventListener("click", async () => {
-      const code = [...pre.childNodes]
-        .filter((node) => node !== btn)
-        .map((node) => node.textContent)
-        .join("");
       try {
-        await navigator.clipboard.writeText(code);
+        await navigator.clipboard.writeText(codeText);
         btn.textContent = "Copied!";
         btn.setAttribute("aria-label", "Copied to clipboard");
       } catch {
@@ -194,7 +237,20 @@ const initCopyButtons = () => {
       }
     });
 
-    pre.append(btn);
+    toolbar.append(btn);
+    container.prepend(toolbar);
+  }
+};
+
+// Wrap wide tables so they scroll horizontally instead of breaking layout
+// on narrow viewports, and pick up the rounded .table-container frame.
+const initTables = () => {
+  for (const table of document.querySelectorAll("#content table")) {
+    if (table.closest(".table-container")) continue;
+    const wrap = document.createElement("div");
+    wrap.className = "table-container";
+    table.replaceWith(wrap);
+    wrap.append(table);
   }
 };
 
@@ -204,5 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
   initTocHighlight();
   initMobileNav();
-  initCopyButtons();
+  initCodeBlocks();
+  initTables();
 });
