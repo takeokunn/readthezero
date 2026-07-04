@@ -53,7 +53,8 @@
     padding-inline: 0.2em;
   }
 
-  :is(.note, .warning, .danger, .tip, .caution, .important) {
+  :is([class~="note" i], [class~="warning" i], [class~="danger" i],
+      [class~="tip" i], [class~="caution" i], [class~="important" i]) {
     background: none !important;
     box-shadow: none !important;
     border: 1px solid #000;

@@ -17,20 +17,20 @@ jobs:
       contents: read
       pages: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup nix
         uses: ./.github/actions/setup-nix
         with:
           cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
+      - name: Run all checks
+        run: nix flake check --print-build-logs
+
       - name: Build site
         run: |
           nix build .#site
           cp -rL result site
-
-      - name: Lint CSS
-        run: nix build .#checks.x86_64-linux.lint
 
       - name: Upload pages artifact
         if: ${{ github.event_name == 'push' }}

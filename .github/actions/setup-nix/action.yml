@@ -1,13 +1,16 @@
 name: Run setup-nix
-description: Set up Nix environment for GitHub Actions
+description: Set up Nix with a dedicated Cachix binary cache for readthezero
 inputs:
   cachix-auth-token:
     required: true
 runs:
   using: composite
   steps:
-    - uses: cachix/install-nix-action@v31
+    - uses: cachix/install-nix-action@v31.10.6
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
     - uses: cachix/cachix-action@v17
       with:
-        name: takeokunn-nixos-configuration
+        name: takeokunn-readthezero
+        extraPullNames: takeokunn-nixos-configuration
         authToken: "${{ inputs.cachix-auth-token }}"

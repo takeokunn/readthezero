@@ -8,6 +8,11 @@
   background: var(--rtz-sidebar-active-bg);
   color: var(--rtz-primary);
   font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--rtz-primary);
+}
+
+[dir="rtl"] #table-of-contents a.is-active {
+  box-shadow: inset -3px 0 0 var(--rtz-primary);
 }
 
 /* Theme Toggle Button (JS-created) */

@@ -42,20 +42,22 @@
   outline-offset: 2px;
 }
 
-/* Admonition Non-Color Indicators (WCAG 1.4.1) */
-:is(.note, .warning, .danger, .tip, .caution, .important)::before {
+/* Admonition Non-Color Indicators (WCAG 1.4.1) — case-insensitive to match
+ * Org's block-name-cased classes (NOTE, WARNING, ...). */
+:is([class~="note" i], [class~="warning" i], [class~="danger" i],
+    [class~="tip" i], [class~="caution" i], [class~="important" i])::before {
   display: inline-block;
   margin-inline-end: 0.5em;
   font-weight: 700;
   speak: always;
 }
 
-.note::before      { content: "\2139\FE0F"; }
-.warning::before   { content: "\26A0\FE0F"; }
-.danger::before    { content: "\26D4"; }
-.tip::before       { content: "\1F4A1"; }
-.caution::before   { content: "\26A0\FE0F"; }
-.important::before { content: "\2757"; }
+[class~="note" i]::before      { content: "\2139\FE0F"; }
+[class~="warning" i]::before   { content: "\26A0\FE0F"; }
+[class~="danger" i]::before    { content: "\26D4"; }
+[class~="tip" i]::before       { content: "\1F4A1"; }
+[class~="caution" i]::before   { content: "\26A0\FE0F"; }
+[class~="important" i]::before { content: "\2757"; }
 
 /* High Contrast Mode */
 @media (prefers-contrast: more) {

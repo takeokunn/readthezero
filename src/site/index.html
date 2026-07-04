@@ -3,111 +3,249 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>readthezero - Theme Gallery</title>
+  <title>readthezero — Modern Org-mode HTML Export Theme</title>
+  <meta name="description" content="A modern, accessible Org-mode HTML export theme with 15 built-in color themes, dark mode, and WCAG 2.2 AA compliance.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b6cc4'/%3E%3Ctext x='16' y='23' font-family='system-ui,sans-serif' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3E0%3C/text%3E%3C/svg%3E">
   <style>
-    :root { color-scheme: light dark; }
+    :root {
+      color-scheme: light dark;
+      --bg: light-dark(#fbfbfd, #0d0d10);
+      --surface: light-dark(#ffffff, #16161b);
+      --text: light-dark(#1a1b1e, #e6e7ea);
+      --muted: light-dark(#5a5b60, #9a9ba0);
+      --border: light-dark(#e4e5ea, #26262c);
+      --border-strong: light-dark(#c9cad1, #3a3a42);
+      --accent: oklch(0.55 0.1 250);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      max-width: 40rem; margin: 4rem auto; padding: 0 1rem;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      max-width: 60rem;
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 4.5rem) 1.25rem 4rem;
       line-height: 1.6;
-      color: light-dark(#1a1a1a, #e5e5e5);
-      background: light-dark(#fff, #111);
+      color: var(--text);
+      background:
+        radial-gradient(60rem 30rem at 50% -10rem, color-mix(in oklch, var(--accent) 12%, transparent), transparent 70%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-    p.lead { color: light-dark(#555, #999); margin-bottom: 2rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+
+    ::selection { background: color-mix(in oklch, var(--accent) 22%, transparent); }
+
+    /* --- Hero --- */
+    header { margin-bottom: 2.5rem; }
+
+    .logo {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+      font-weight: 800; letter-spacing: -0.03em; margin: 0;
+    }
+    .logo .mark {
+      display: grid; place-items: center;
+      inline-size: 2.4rem; block-size: 2.4rem;
+      background: var(--accent); color: #fff;
+      border-radius: 0.6rem; font-size: 1.4rem;
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
+      color: var(--muted); margin: 0.9rem 0 1.4rem; max-width: 44rem;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .chip {
+      font-size: 0.8rem; font-weight: 600;
+      padding: 0.3rem 0.7rem; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .chip.accent { color: #fff; background: var(--accent); border-color: transparent; }
+
+    /* --- Section heading --- */
+    h2 {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); font-weight: 700;
+      margin: 2.5rem 0 1rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* --- Theme grid --- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+      gap: 1rem;
+    }
+
     .card {
-      border: 1px solid light-dark(#ddd, #333); border-radius: 0.75rem;
-      padding: 1.5rem; text-decoration: none; color: inherit;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+      display: flex; flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.85rem;
+      padding: 1.35rem 1.35rem 1.25rem;
+      text-decoration: none; color: inherit;
+      overflow: hidden;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
-    .card:hover { border-color: light-dark(#888, #666); box-shadow: 0 2px 8px light-dark(rgba(0,0,0,0.08), rgba(0,0,0,0.3)); }
-    .card h2 { font-size: 1.25rem; margin: 0 0 0.5rem; }
-    .card p { font-size: 0.875rem; color: light-dark(#555, #999); margin: 0; }
-    .badge { display: inline-block; font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 1rem; background: light-dark(#f0f0f0, #222); margin-top: 0.75rem; }
-    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid light-dark(#ddd, #333); font-size: 0.875rem; color: light-dark(#888, #666); }
+    /* Accent bar keyed to each theme's real primary color */
+    .card::before {
+      content: ""; position: absolute; inset-block-start: 0; inset-inline: 0;
+      block-size: 4px; background: var(--accent);
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in oklch, var(--accent) 55%, var(--border-strong));
+      box-shadow: 0 8px 24px light-dark(rgba(20,22,30,0.1), rgba(0,0,0,0.45));
+    }
+    .card:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px;
+    }
+
+    .swatches { display: flex; gap: 0.3rem; margin-bottom: 0.9rem; }
+    .swatches span {
+      inline-size: 1.1rem; block-size: 1.1rem; border-radius: 50%;
+      border: 1px solid color-mix(in oklch, var(--text) 15%, transparent);
+    }
+    .swatches .s1 { background: var(--accent); }
+    .swatches .s2 { background: color-mix(in oklch, var(--accent) 55%, white); }
+    .swatches .s3 { background: color-mix(in oklch, var(--accent) 45%, black); }
+
+    .card h3 { font-size: 1.15rem; margin: 0 0 0.35rem; letter-spacing: -0.01em; }
+    .card p { font-size: 0.875rem; color: var(--muted); margin: 0 0 0.9rem; flex: 1; }
+
+    .badge {
+      align-self: flex-start;
+      font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+      font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 0.35rem;
+      background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+      color: color-mix(in oklch, var(--accent) 75%, var(--text));
+      border: 1px solid color-mix(in oklch, var(--accent) 25%, transparent);
+    }
+
+    /* --- Quick start --- */
+    .quickstart {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 0.85rem; padding: 1.25rem 1.4rem; margin-top: 0.5rem;
+    }
+    .quickstart p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.9rem; }
+    pre {
+      margin: 0; padding: 0.9rem 1rem; overflow-x: auto;
+      background: light-dark(#f4f5f7, #0b0b0e); color: var(--text);
+      border: 1px solid var(--border); border-radius: 0.5rem;
+      font-family: ui-monospace, "Cascadia Code", Menlo, monospace; font-size: 0.82rem;
+    }
+
+    footer {
+      margin-top: 3rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem; color: var(--muted);
+      display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; align-items: center;
+    }
+    footer a { color: color-mix(in oklch, var(--accent) 75%, var(--text)); font-weight: 600; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card { transition: none; }
+      .card:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
-  <h1>readthezero</h1>
-  <p class="lead">Modern, accessible Org-mode HTML export theme. Pick a theme to preview.</p>
+  <header>
+    <h1 class="logo"><span class="mark">0</span>readthezero</h1>
+    <p class="tagline">
+      A modern, accessible HTML export theme for Org-mode — the successor to
+      readtheorg, rebuilt from scratch with contemporary CSS. Pick a theme below
+      to preview the full feature showcase.
+    </p>
+    <div class="chips">
+      <span class="chip accent">15 themes</span>
+      <span class="chip">Dark mode</span>
+      <span class="chip">WCAG 2.2 AA</span>
+      <span class="chip">RTL support</span>
+      <span class="chip">Print optimized</span>
+      <span class="chip">MIT</span>
+    </div>
+  </header>
+
+  <h2>Themes</h2>
   <div class="grid">
-    <a class="card" href="default/index.html">
-      <h2>Default</h2>
-      <p>Clean, neutral blue-gray accent. Works for any document.</p>
-      <span class="badge">default</span>
+    <a class="card" href="default/index.html" style="--accent: oklch(0.55 0.1 250)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Default</h3><p>Neutral palette with clean blue-gray accents.</p><span class="badge">default</span>
     </a>
-    <a class="card" href="ocean/index.html">
-      <h2>Ocean</h2>
-      <p>Deep blue accents with a nautical feel.</p>
-      <span class="badge">ocean</span>
+    <a class="card" href="ocean/index.html" style="--accent: oklch(0.55 0.18 245)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Ocean</h3><p>Cool blue tones inspired by deep water.</p><span class="badge">ocean</span>
     </a>
-    <a class="card" href="forest/index.html">
-      <h2>Forest</h2>
-      <p>Earthy green tones inspired by nature.</p>
-      <span class="badge">forest</span>
+    <a class="card" href="forest/index.html" style="--accent: oklch(0.5 0.15 150)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Forest</h3><p>Warm green tones inspired by nature.</p><span class="badge">forest</span>
     </a>
-    <a class="card" href="nord/index.html">
-      <h2>Nord</h2>
-      <p>Arctic blue-gray palette from the polar north.</p>
-      <span class="badge">nord</span>
+    <a class="card" href="nord/index.html" style="--accent: oklch(0.45 0.12 250)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Nord</h3><p>Arctic, north-bluish palette from the polar north.</p><span class="badge">nord</span>
     </a>
-    <a class="card" href="dracula/index.html">
-      <h2>Dracula</h2>
-      <p>Deep purple and pink tones for night owls.</p>
-      <span class="badge">dracula</span>
+    <a class="card" href="dracula/index.html" style="--accent: oklch(0.55 0.16 300)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Dracula</h3><p>Dark theme with vivid purple accents.</p><span class="badge">dracula</span>
     </a>
-    <a class="card" href="gruvbox/index.html">
-      <h2>Gruvbox</h2>
-      <p>Retro warm amber with earthy charcoal.</p>
-      <span class="badge">gruvbox</span>
+    <a class="card" href="tokyo-night/index.html" style="--accent: oklch(0.55 0.17 280)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Tokyo Night</h3><p>Dark theme inspired by Tokyo city at night.</p><span class="badge">tokyo-night</span>
     </a>
-    <a class="card" href="solarized/index.html">
-      <h2>Solarized</h2>
-      <p>Classic warm cream and teal palette.</p>
-      <span class="badge">solarized</span>
+    <a class="card" href="gruvbox/index.html" style="--accent: oklch(0.58 0.18 75)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Gruvbox</h3><p>Retro groove with warm earthy tones.</p><span class="badge">gruvbox</span>
     </a>
-    <a class="card" href="tokyo-night/index.html">
-      <h2>Tokyo Night</h2>
-      <p>Midnight blue city lights.</p>
-      <span class="badge">tokyo-night</span>
+    <a class="card" href="solarized/index.html" style="--accent: oklch(0.55 0.13 235)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Solarized</h3><p>Precision colors for machines and people.</p><span class="badge">solarized</span>
     </a>
-    <a class="card" href="contrast/index.html">
-      <h2>Contrast</h2>
-      <p>Maximum contrast for WCAG AAA accessibility.</p>
-      <span class="badge">contrast</span>
+    <a class="card" href="arctic/index.html" style="--accent: oklch(0.48 0.1 220)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Arctic</h3><p>Clean cool whites and icy blues.</p><span class="badge">arctic</span>
     </a>
-    <a class="card" href="rose/index.html">
-      <h2>Rose</h2>
-      <p>Warm pink tones, soft and elegant.</p>
-      <span class="badge">rose</span>
+    <a class="card" href="autumn/index.html" style="--accent: oklch(0.52 0.18 40)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Autumn</h3><p>Warm oranges and reds of the fall season.</p><span class="badge">autumn</span>
     </a>
-    <a class="card" href="lavender/index.html">
-      <h2>Lavender</h2>
-      <p>Soft purple-tinted calm neutrals.</p>
-      <span class="badge">lavender</span>
+    <a class="card" href="cherry/index.html" style="--accent: oklch(0.55 0.15 5)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Cherry</h3><p>Soft pinks and cherry blossom tones.</p><span class="badge">cherry</span>
     </a>
-    <a class="card" href="peach/index.html">
-      <h2>Peach</h2>
-      <p>Warm peach and apricot cream.</p>
-      <span class="badge">peach</span>
+    <a class="card" href="contrast/index.html" style="--accent: oklch(0.3 0.15 250)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Contrast</h3><p>High-contrast theme for maximum readability.</p><span class="badge">contrast</span>
     </a>
-    <a class="card" href="cherry/index.html">
-      <h2>Cherry (桜)</h2>
-      <p>Delicate cherry blossom pink.</p>
-      <span class="badge">cherry</span>
+    <a class="card" href="lavender/index.html" style="--accent: oklch(0.52 0.13 285)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Lavender</h3><p>Soft purple and lavender tones.</p><span class="badge">lavender</span>
     </a>
-    <a class="card" href="autumn/index.html">
-      <h2>Autumn (紅葉)</h2>
-      <p>Warm harvest amber and ember-brown.</p>
-      <span class="badge">autumn</span>
+    <a class="card" href="peach/index.html" style="--accent: oklch(0.58 0.14 55)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Peach</h3><p>Warm peach and apricot palette.</p><span class="badge">peach</span>
     </a>
-    <a class="card" href="arctic/index.html">
-      <h2>Arctic (雪原)</h2>
-      <p>Crisp glacier-white polar tones.</p>
-      <span class="badge">arctic</span>
+    <a class="card" href="rose/index.html" style="--accent: oklch(0.52 0.16 5)">
+      <div class="swatches"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+      <h3>Rose</h3><p>Elegant rose and dusty pink tones.</p><span class="badge">rose</span>
     </a>
   </div>
-  <footer>readthezero v@VERSION@ &middot; MIT License &middot; <a href="https://github.com/takeokunn/readthezero">GitHub</a></footer>
+
+  <h2>Quick start</h2>
+  <div class="quickstart">
+    <p>Add one line to your Org file header, then export with <code>C-c C-e h h</code>:</p>
+    <pre>#+SETUPFILE: https://takeokunn.github.io/readthezero/readthezero-default.setup</pre>
+  </div>
+
+  <footer>
+    <span>readthezero v@VERSION@</span>
+    <span>MIT License</span>
+    <a href="https://github.com/takeokunn/readthezero">GitHub</a>
+    <a href="https://orgmode.org/">Org-mode</a>
+  </footer>
 </body>
 </html>

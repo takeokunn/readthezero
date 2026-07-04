@@ -16,7 +16,7 @@
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgsFor = system: nixpkgs.legacyPackages.${system};
-      version = "0.1.0";
+      version = "0.2.0";
       themes = [
         "default"
         "ocean"
@@ -219,13 +219,18 @@
           pkgs = pkgsFor system;
         in
         {
+          # Build every theme bundle (CSS + JS + setup file).
           build = self.packages.${system}.all;
 
+          # Export the example documents with the default theme.
           example = self.packages.${system}.example;
 
+          # Assemble the full multi-theme demo site.
+          site = self.packages.${system}.site;
+
+          # Validate that every CSS file parses against the browser target.
           lint = pkgs.runCommand "readthezero-lint" { nativeBuildInputs = [ pkgs.lightningcss ]; } ''
             cd ${./src}
-            # Validate that all CSS files parse correctly
             for f in base/*.css; do
               echo "Checking $f ..."
               lightningcss --targets '>= 0.25%' "$f" > /dev/null
@@ -235,6 +240,70 @@
               lightningcss --targets '>= 0.25%' "$f" > /dev/null
             done
             echo "All CSS files valid."
+            touch $out
+          '';
+
+          # Type-check / bundle the runtime JS and confirm it minifies cleanly.
+          js = pkgs.runCommand "readthezero-js" { nativeBuildInputs = [ pkgs.esbuild ]; } ''
+            cd ${./src}
+            echo "Bundling js/readthezero.js ..."
+            esbuild --bundle --minify --format=iife \
+              --target=chrome92,firefox90,safari15.4 \
+              js/readthezero.js > /dev/null
+            echo "JS bundles cleanly."
+            touch $out
+          '';
+
+          # Smoke-test the generated setup file: no unsubstituted placeholders,
+          # and the expected asset references are present.
+          setup = pkgs.runCommand "readthezero-setup" { } ''
+            setup=${self.packages.${system}.default}/readthezero-default.setup
+            echo "Checking $setup ..."
+            if grep -qE '@THEME@|@VERSION@' "$setup"; then
+              echo "ERROR: unsubstituted placeholder found in setup file" >&2
+              exit 1
+            fi
+            for needle in \
+              'readthezero-base.css' \
+              'readthezero-theme-default.css' \
+              'readthezero.js' \
+              '${version}'; do
+              grep -qF "$needle" "$setup" || {
+                echo "ERROR: setup file missing '$needle'" >&2
+                exit 1
+              }
+            done
+            echo "Setup file valid."
+            touch $out
+          '';
+
+          # Smoke-test the exported HTML: files exist, are well-formed, and wire
+          # up the readthezero assets and layout hooks the JS/CSS depend on.
+          html = pkgs.runCommand "readthezero-html" { nativeBuildInputs = [ pkgs.libxml2.bin ]; } ''
+            example=${self.packages.${system}.example}
+            html="$example/index.html"
+            echo "Checking $html ..."
+            test -s "$html" || { echo "ERROR: index.html missing or empty" >&2; exit 1; }
+
+            # Well-formedness (lenient HTML parse; fail only on real errors).
+            xmllint --html --noout "$html" 2>xmllint.log || true
+            if grep -qi 'error' xmllint.log; then
+              echo "ERROR: xmllint reported HTML errors:" >&2
+              cat xmllint.log >&2
+              exit 1
+            fi
+
+            for needle in \
+              'readthezero-base.css' \
+              'readthezero.js' \
+              'id="content"' \
+              'id="table-of-contents"'; do
+              grep -qF "$needle" "$html" || {
+                echo "ERROR: exported HTML missing '$needle'" >&2
+                exit 1
+              }
+            done
+            echo "Exported HTML valid."
             touch $out
           '';
         }
